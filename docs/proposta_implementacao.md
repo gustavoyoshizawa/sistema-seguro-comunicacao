@@ -1,7 +1,5 @@
 # Proposta de Implementação:
 
-Tecnologias:
-
 ## bcrypt
 bcrypt protege as senhas armazenadas ao aplicar um sal aleatório e múltiplas iterações de hashing. Isso impede que senhas sejam armazenadas de forma insegura e dificulta ataques de força bruta ou rainbow tables.
 

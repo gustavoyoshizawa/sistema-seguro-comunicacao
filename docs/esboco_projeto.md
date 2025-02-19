@@ -1,4 +1,4 @@
-Objetivo do projeto (segurança na comunicação entre funcionários).
+# Objetivo do projeto (segurança na comunicação entre funcionários).
 
 Tecnologias utilizadas:
 ✅ bcrypt → Hashing seguro de senhas.

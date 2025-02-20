@@ -12,9 +12,14 @@ AES usa uma chave simétrica para criptografar e descriptografar mensagens de fo
 ## RSA (Rivest-Shamir-Adleman)
 RSA criptografa a chave AES com a chave pública do destinatário. Apenas o destinatário pode usar sua chave privada para descriptografá-la, garantindo que a chave de criptografia da mensagem fique segura.
 
-Principais etapas de implementação, incluindo:
+
+
+## Principais etapas de implementação, incluindo:
 ✅ Cadastro de usuário → Hash de senha com bcrypt.
+
 ✅ Login → Geração e verificação de Token JWT.
+
 ✅ Criptografia de mensagens → Uso de AES (CBC).
+
 ✅ Proteção da chave AES → Uso de RSA para criptografar a chave antes de armazená-la.
 Breve explicação sobre armazenamento seguro de dados.

@@ -22,6 +22,7 @@ class UserOut(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str
+    hashed_password: Optional[str] = None
 
 class LogOut(BaseModel):
     id: int

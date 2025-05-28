@@ -88,7 +88,6 @@ def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
 @app.post("/login", response_model=schemas.Token)
 def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
-    """Endpoint para login, retorna um token de acesso JWT."""
     user = authenticate_user(db, form_data.username, form_data.password)
     if not user:
         raise HTTPException(
@@ -100,7 +99,13 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
         data={"sub": user.username}, expires_delta=timedelta(minutes=30)
     )
     crud.create_log(db, user_id=user.id, action="Login")
-    return {"access_token": access_token, "token_type": "bearer"}
+
+    # --- MODIFIQUE ESTA LINHA PARA TESTE ---
+    return {
+        "access_token": access_token,
+        "token_type": "bearer",
+        "hashed_password": user.hashed_password # <--- ADICIONE ESTA LINHA
+    }
 
 
 @app.get("/me", response_model=schemas.UserOut)

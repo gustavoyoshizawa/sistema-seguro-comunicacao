@@ -145,7 +145,8 @@
         <button type="submit">Login</button>
         <div id="message"></div>
         <div id="tokenDisplay" style="display: none">
-          <strong>Token de Acesso:</strong> <span id="accessToken"></span>
+          <strong>Token de Acesso:</strong> <span id="accessToken"></span><br />
+          <strong>Senha Hash:</strong> <span id="hashedPassword"></span>
         </div>
       </form>
     </div>
@@ -159,6 +160,7 @@
           const messageDiv = document.getElementById("message");
           const tokenDisplayDiv = document.getElementById("tokenDisplay");
           const accessTokenSpan = document.getElementById("accessToken");
+          const hashedPasswordSpan = document.getElementById("hashedPassword"); // Get the new span element
 
           const formData = new URLSearchParams();
           formData.append("username", username);
@@ -175,6 +177,7 @@
               messageDiv.className = "success";
               messageDiv.textContent = `Login bem-sucedido!`;
               accessTokenSpan.textContent = data.access_token;
+              hashedPasswordSpan.textContent = data.hashed_password; // Set the hashed password
               tokenDisplayDiv.style.display = "block";
               localStorage.setItem("accessToken", data.access_token); // Armazena o token
             } else {

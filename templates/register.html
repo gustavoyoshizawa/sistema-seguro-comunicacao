@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registrar Usuário</title>
+    <style>
+      /* Estilos Globais e Reset Básico */
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f7f6;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      /* Estilo da Barra de Navegação */
+      .navbar {
+        background-color: #2c3e50; /* Azul escuro */
+        padding: 15px 40px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: flex-start;
+        gap: 25px; /* Espaço entre os links */
+      }
+      .navbar a {
+        color: #ecf0f1; /* Branco/cinza claro */
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 1.05em;
+        transition: color 0.3s ease;
+      }
+      .navbar a:hover {
+        color: #3498db; /* Azul claro */
+        text-decoration: underline;
+      }
+
+      /* Estilos do Conteúdo Principal e Formulário */
+      .container {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 25px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      }
+
+      form {
+        max-width: 400px;
+        margin: 0 auto; /* Centraliza o formulário dentro do container */
+        padding: 20px;
+        border: 1px solid #e0e0e0; /* Borda mais suave */
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        background-color: #fcfcfc;
+      }
+      h2 {
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 25px;
+        font-size: 2em;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #555;
+      }
+      input[type="text"],
+      input[type="email"],
+      input[type="password"] {
+        width: calc(100% - 20px); /* Ajusta a largura para o padding */
+        padding: 12px 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1em;
+        box-sizing: border-box; /* Inclui padding na largura total */
+      }
+
+      /* Estilo do Botão */
+      button {
+        background-color: #007bff; /* Azul padrão */
+        color: white;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1.1em;
+        font-weight: 500;
+        transition: background-color 0.3s ease;
+        width: 100%; /* Ocupa a largura total */
+      }
+      button:hover {
+        background-color: #0056b3; /* Azul mais escuro */
+      }
+
+      /* Estilo da Mensagem */
+      #message {
+        margin-top: 15px;
+        padding: 12px;
+        border-radius: 6px;
+        text-align: center;
+        font-weight: 500;
+      }
+      .success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+      .error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <a href="/login_page">Login</a>
+      <a href="/register_page">Registrar</a>
+      <a href="/me_page">Minha Conta</a>
+      <a href="/admin_logs_page">Logs Admin</a>
+    </nav>
+    <div class="container">
+      <form id="registerForm">
+        <h2>Registrar Novo Usuário</h2>
+        <label for="username">Usuário:</label>
+        <input type="text" id="username" name="username" required /><br />
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required /><br />
+        <label for="password">Senha:</label>
+        <input type="password" id="password" name="password" required /><br />
+        <label for="role">Função (admin/user):</label>
+        <input type="text" id="role" name="role" value="user" /><br />
+        <button type="submit">Registrar</button>
+        <div id="message"></div>
+      </form>
+    </div>
+    <script>
+      document
+        .getElementById("registerForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+          const username = document.getElementById("username").value;
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+          const role = document.getElementById("role").value;
+          const messageDiv = document.getElementById("message");
+
+          try {
+            const response = await fetch("/register", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ username, email, password, role }),
+            });
+            const data = await response.json();
+            if (response.ok) {
+              messageDiv.className = "success";
+              messageDiv.textContent = `Usuário ${data.username} registrado com sucesso! ID: ${data.id}`;
+            } else {
+              messageDiv.className = "error";
+              messageDiv.textContent = `Erro: ${
+                data.detail || "Algo deu errado."
+              }`;
+            }
+          } catch (error) {
+            messageDiv.className = "error";
+            messageDiv.textContent = `Erro na requisição: ${error.message}`;
+          }
+        });
+    </script>
+  </body>
+</html>
